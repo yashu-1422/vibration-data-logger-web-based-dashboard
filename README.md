@@ -115,11 +115,11 @@ Use the **Export** buttons on the main dashboard. A date-time picker will appear
   <img src="https://github.com/user-attachments/assets/04777e16-880b-4cfe-bee8-676b9f4107fa" alt="System Settings" width="900">
   <br><br>
 
-  <h3>3. Data Export & Reporting</h3>
+  <h3>3. Dynamic System Settings</h3>
   <img src="https://github.com/user-attachments/assets/befe8f82-e91e-43fb-8604-66062b1bc3e4" alt="History Logs" width="900">
   <br><br>
 
-  <h3> 4. Dynamic System Settings</h3>
+  <h3>4. Data Export & Reporting</h3>
   <img src="https://github.com/user-attachments/assets/94d239f9-73ce-4044-b8eb-9d62efb7f820" alt="Monitoring Dashboard" width="900">
 </div>
 ---
