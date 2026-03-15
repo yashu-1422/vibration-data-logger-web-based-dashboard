@@ -105,7 +105,25 @@ The dashboard allows you to adjust the **Auto-Refresh Rate**.
 Use the **Export** buttons on the main dashboard. A date-time picker will appear, allowing you to generate reports for specific shifts or incident timeframes, preventing bloated file downloads.
 
 ---
+### preview
+<div align="center">
+  <h3>1. Real-Time Dashboard</h3>
+  <img src="https://github.com/user-attachments/assets/c3a123be-b9e0-4a69-a85d-37e22d5272f1" alt="Smart Data Export" width="900">
+  <br><br>
 
+  <h3>2. Historical Data Logs</h3>
+  <img src="https://github.com/user-attachments/assets/04777e16-880b-4cfe-bee8-676b9f4107fa" alt="System Settings" width="900">
+  <br><br>
+
+  <h3>3. Data Export & Reporting</h3>
+  <img src="https://github.com/user-attachments/assets/befe8f82-e91e-43fb-8604-66062b1bc3e4" alt="History Logs" width="900">
+  <br><br>
+
+  <h3> 4. Dynamic System Settings</h3>
+  <img src="https://github.com/user-attachments/assets/94d239f9-73ce-4044-b8eb-9d62efb7f820" alt="Monitoring Dashboard" width="900">
+</div>
+---
+---
 ## 📂 Project Structure
 
 * `src/main/java/.../model/` - JPA entities for vibration and settings.
