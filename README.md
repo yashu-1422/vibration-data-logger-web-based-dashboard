@@ -1,8 +1,4 @@
-This looks like a solid full-stack IoT project. I’ve cleaned up the formatting, added a clear technical architecture section, and organized the instructions into a professional, copy-pasteable `README.md` structure that will look great on GitHub or in a project folder.
 
-I've also included the magnitude formula in LaTeX to keep the technical documentation sharp.
-
----
 
 # Vibration Data Logging & Monitoring System
 
@@ -119,4 +115,3 @@ Use the **Export** buttons on the main dashboard. A date-time picker will appear
 
 ---
 
-Would you like me to generate the specific `application.properties` file or the Python `requirements.txt` to match this setup?
