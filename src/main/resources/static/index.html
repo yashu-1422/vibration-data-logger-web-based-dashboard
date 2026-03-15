@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibration Data Logger Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-waveform-lines"></i>
+                <h2>VibraLog</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li class="nav-item active" data-target="dashboard"><a href="#dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li class="nav-item" data-target="history"><a href="#history"><i class="fa-solid fa-table"></i> History</a></li>
+                    <li class="nav-item" data-target="settings"><a href="#settings"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="system-status">
+                <div class="status-indicator"></div>
+                <span>System Online</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header>
+                <div class="header-title">
+                    <h1>Real-Time Monitoring</h1>
+                    <p>Track machine vibration and condition</p>
+                </div>
+                <div class="header-actions">
+                    <button id="export-excel" class="btn btn-outline"><i class="fa-solid fa-file-excel"></i> Export Excel</button>
+                    <button id="export-pdf" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
+                </div>
+            </header>
+
+            <!-- KPI Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                    <div class="kpi-data">
+                        <h3>Current Magnitude</h3>
+                        <p class="kpi-value" id="current-magnitude">0.00 <span>g</span></p>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <div class="kpi-data">
+                        <h3>Machine Status</h3>
+                        <p class="kpi-value status-normal" id="current-status">Normal</p>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    <div class="kpi-data">
+                        <h3>Peak Vibration</h3>
+                        <p class="kpi-value" id="peak-magnitude">0.00 <span>g</span></p>
+                    </div>
+                </div>
+                <div class="kpi-card glassmorphism">
+                    <div class="kpi-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div class="kpi-data">
+                        <h3>Last Update</h3>
+                        <p class="kpi-value" id="last-update">--:--:--</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container glassmorphism lg-chart">
+                    <div class="chart-header">
+                        <h3>Vibration Magnitude vs Time</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="magnitudeChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glassmorphism">
+                    <div class="chart-header">
+                        <h3>Axis Accelerations (X, Y, Z)</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="axisChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table Section -->
+            <section class="table-section glassmorphism hidden" id="history">
+                <div class="table-header">
+                    <h3>Recent Data Log</h3>
+                    <div class="table-actions">
+                        <button class="btn btn-icon refresh-btn"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Ax (g)</th>
+                                <th>Ay (g)</th>
+                                <th>Az (g)</th>
+                                <th>Magnitude (g)</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Data rows will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="settings-section glassmorphism hidden" id="settings">
+                <div class="settings-header">
+                    <h3>System Settings</h3>
+                    <p>Configure dashboard behavior and alert thresholds</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <!-- Theme Settings -->
+                    <div class="settings-card form-group">
+                        <label>Appearance Theme</label>
+                        <select id="theme-select" class="form-control">
+                            <option value="dark">Dark Mode (Glassmorphism)</option>
+                            <option value="light">Light Mode (Clean)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Polling Rate -->
+                    <div class="settings-card form-group">
+                        <label>Auto-Refresh Rate</label>
+                        <select id="polling-rate" class="form-control">
+                            <option value="1000">1 Second (Live)</option>
+                            <option value="2000" selected>2 Seconds (Standard)</option>
+                            <option value="5000">5 Seconds (Slow)</option>
+                            <option value="10000">10 Seconds (Very Slow)</option>
+                        </select>
+                    </div>
+
+                    <!-- Alert Thresholds -->
+                    <div class="settings-card form-group">
+                        <label>Warning Threshold (g)</label>
+                        <input type="number" step="0.1" id="warning-threshold" class="form-control" value="1.0">
+                        <small class="text-muted">Magnitude values above this trigger Warning status.</small>
+                    </div>
+
+                    <div class="settings-card form-group">
+                        <label>Critical Threshold (g)</label>
+                        <input type="number" step="0.1" id="critical-threshold" class="form-control" value="2.0">
+                        <small class="text-muted">Magnitude values above this trigger Critical status.</small>
+                    </div>
+                </div>
+
+                <div class="settings-footer">
+                    <button id="save-settings" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Data Settings</button>
+                    <span id="settings-status" class="settings-status hidden">Saved!</span>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal-overlay hidden">
+        <div class="modal-content glassmorphism">
+            <div class="modal-header">
+                <h3>Export Excel (Date Range)</h3>
+                <button id="close-modal" class="btn-icon"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="export-start"><i class="fa-solid fa-calendar"></i> Start Date & Time</label>
+                    <input type="datetime-local" id="export-start" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="export-end"><i class="fa-solid fa-calendar"></i> End Date & Time</label>
+                    <input type="datetime-local" id="export-end" class="form-control">
+                </div>
+                <div id="export-error" class="error-message hidden">Please select a valid date range.</div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-export" class="btn btn-outline">Cancel</button>
+                <button id="confirm-export" class="btn btn-primary"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- jsPDF and autoTable for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+</body>
+</html>
